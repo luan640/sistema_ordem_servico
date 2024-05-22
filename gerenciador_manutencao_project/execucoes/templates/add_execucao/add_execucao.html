@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Add execução{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <h1 class="text-center">Add Execução</h1>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        {{form.as_p}}
+
+        <button class="btn btn-success">Submit</button>
+    </form>
+
+</div>
+
+{% endblock %}

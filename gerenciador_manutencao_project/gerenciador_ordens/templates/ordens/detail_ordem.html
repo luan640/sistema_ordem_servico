@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhamento da ordem{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Detalhamento da ordem
+                    </div>
+                </div>
+            </div>
+            <!-- Table cars disponible -->
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-1">
+                        <label for="solicitanteOrdem">OS:</label>
+                        <a class="form-control" href="{% url 'executar-ordem' ordem.id %}">{{ordem.id}}</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="solicitanteOrdem">Solicitante</label>
+                        <input id="solicitanteOrdem" class="form-control" type="text" value="{{ ordem.solicitante }}" disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="solicitanteOrdem">Setor</label>
+                        <input id="solicitanteOrdem" class="form-control" type="text" value="{{ ordem.setor }}" disabled>
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="solicitanteOrdem">Descrição</label>
+                        <textarea class="form-control" name="solicitanteOrdem" id="solicitanteOrdem" disabled>{{ ordem.descricao }}</textarea>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <label for="solicitanteOrdem">Máquina</label>
+                        <input id="solicitanteOrdem" class="form-control" type="text" value="{{ ordem.maquina }}" disabled>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="solicitanteOrdem">Data de abertura</label>
+                        <input id="solicitanteOrdem" class="form-control" type="text" value="{{ ordem.data_hora_abertura }}" disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="solicitanteOrdem">Máquina parada?</label>
+                        <input id="solicitanteOrdem" class="form-control" type="text" value="{{ ordem.maquina_parada }}" disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="solicitanteOrdem">Impacto na produção</label>
+                        <input id="solicitanteOrdem" class="form-control" type="text" value="{{ ordem.impacto_producao }}" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Execuções
+                    </div>
+                </div>
+            </div>
+            <!-- Table cars disponible -->
+            <div class="card-body">
+                {% for ex in execucoes %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Execução:</strong> {{ex.n_execucao}}</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><strong>Início:</strong> <small>{{ex.data_hora_inicio}}</small> <strong>Fim:</strong> <small>{{ex.data_hora_fim}}</small></h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><strong>Tempo total:</strong> <small>{{ex.tempo_total}}</small></h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><strong>Status:</strong> <small>{{ex.status}}</small></h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><strong>Ao chegar a máquina estava parada?</strong> <small>{{ex.maquina_parada}}</small></h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary"><strong>Execução feita com máquina parada?</strong> <small>{{ex.exec_maq_parada}}</small></h6>
+                            <p class="card-text">{{ex.obs_manutencao}}</p>
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Detalhe sobre execuções
+                    </div>
+                </div>
+            </div>
+            <!-- Table cars disponible -->
+            <div class="card-body">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Tempo total da ordem:</strong> {{tempo_total_ordem_aberta}}</h5>
+                        {% if tempo_total_exec_maq_parada.tempo_total %}
+                        <h5 class="card-title"><strong>Tempo total de execução com maquina parada:</strong> {{tempo_total_exec_maq_parada.tempo_total}}</h5>
+                        {% else %}
+                        <h5 class="card-title"><strong>Tempo total de execução com maquina parada:</strong> 00:00:00</h5>
+                        {% endif %}
+                        <h5 class="card-title"><strong>Tempo total de maquina parada:</strong> {{tempo_total_maq_parada}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
